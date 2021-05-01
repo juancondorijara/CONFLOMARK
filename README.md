@@ -1,2 +1,2 @@
 # Conflomark
-Sistema de Supermarket
+Sistema de ventas para Supermercados (Juan Condori | Sergio Flores)
