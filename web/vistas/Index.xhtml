@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:head>
+        <title>EDUCASI</title>
+        <f:event listener="#{personaC.listar()}" type="preRenderView" />
+    </h:head>
+    <h:body>
+        <h:form id="formPersona">
+            <p:growl id="msg" life="1500">
+                <p:autoUpdate/>
+            </p:growl>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="NOMBRE" /><p:inputText value="#{personaC.per.nombre}"  maxlength="20"/>
+                <p:outputLabel value="APELLIDO"/><p:inputText value="#{personaC.per.apellido}" maxlength="20"/>
+
+                <p:outputLabel value="CONTRASEÑA"/><p:inputText value="#{personaC.per.password}" maxlength="16"/>
+                <p:outputLabel value="EMAIL"/><p:inputText value="#{personaC.per.email}" maxlength="20"/>
+                <p:outputLabel value="DIRECCION"/><p:inputText value="#{personaC.per.direccion}" maxlength="20"/>
+                <p:outputLabel value="DNI"/><p:inputText value="#{personaC.per.DNI}" maxlength="8" ><p:keyFilter regEx="/[0-9]/" /></p:inputText>
+                <p:outputLabel value="CELULAR"/><p:inputText value="#{personaC.per.celular}" maxlength="9" ><p:keyFilter regEx="/[0-9]/" /></p:inputText>
+                <p:outputLabel value="ROL"/><p:selectOneRadio id="rol" value="#{personaC.per.ROL}" >
+                    <p:ajax event="change" listener="#{personaC.listadoApoderado.clear()}" update="MenuID"/>
+                    <f:selectItem itemLabel="ADMINISTRADOR" itemValue="A"/>
+                    <f:selectItem itemLabel="APODERADO" itemValue="B"/>
+                    <f:selectItem itemLabel="ALUMNO" itemValue="C"/>
+                </p:selectOneRadio>
+                <p:outputLabel value="ESTADO"/><p:selectOneRadio value="#{personaC.per.estado}">
+                    <f:selectItem itemLabel="ACTIVO" itemValue="I"/>
+                    <f:selectItem itemLabel="INACTIVO" itemValue="O"/>
+                </p:selectOneRadio>
+                <p:outputLabel value="RELACION APODERADO"/><p:selectOneMenu id="MenuID" value="#{personaC.per.personaID}">
+                    <f:selectItems value="#{personaC.listadoApoderado}" var="apo" itemLabel="#{apo.nombre.concat(' ').concat(apo.apellido)}" itemValue="#{apo.ID}"/>
+                </p:selectOneMenu>
+                <p:commandButton value="Registrar" actionListener="#{personaC.registrar()}" 
+                                 update="formPersona :formTblPersona:tblPersona"/>
+            </p:panelGrid>
+        </h:form>
+        <h:form id="formTblPersona">
+            <p:dataTable id="tblPersona" var="pers" value="#{personaC.listadoPer}" selection="#{personaC.per}"
+                         selectionMode="single" rowKey="#{pers.ID}" 
+                         paginator="true"paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+                <f:facet name="header">
+                    <h:commandLink value="Descargar Listado" >
+                        <p:dataExporter type="xls" target="tblPersona" fileName="Listado"/>
+                    </h:commandLink>
+                </f:facet>
+                <p:column headerText="ID" >
+                    <h:outputText value="#{pers.ID}"/>
+                </p:column>
+                <p:column headerText="NOMBRE">
+                    <h:outputText value="#{pers.nombre}" />
+                </p:column>
+                <p:column headerText="APELLIDO">
+                    <h:outputText value="#{pers.apellido}" />
+                </p:column>
+                <p:column headerText="CONTRASEÑA">
+                    <h:outputText value="#{pers.password}" />
+                </p:column>
+                <p:column headerText="EMAIL">
+                    <h:outputText value="#{pers.email}" />
+                </p:column>
+                <p:column headerText="DIRECCION">
+                    <h:outputText value="#{pers.direccion}" />
+                </p:column>
+                <p:column headerText="DNI">
+                    <h:outputText value="#{pers.DNI}" />
+                </p:column>
+                <p:column headerText="CELULAR">
+                    <h:outputText value="#{pers.celular}" />
+                </p:column>
+                <p:column headerText="ESTADO">
+                    <h:outputText value="#{pers.estado}"/>
+                </p:column>
+                <p:column headerText="ROL">
+                    <h:outputText value="#{pers.ROL}" />
+                </p:column>
+                <p:column headerText="RELACION APODERADO">
+                    <h:outputText value="#{pers.personaID}" />
+                </p:column>
+            </p:dataTable>
+            <p:contextMenu for="tblPersona">
+                <p:menuitem value="MODIFICAR" oncomplete="PF('wdlgDatos').show()" update=":formDialog"/>
+                <p:menuitem value="ELIMINAR" actionListener="#{personaC.eliminar()}" update="tblPersona"> 
+                    <p:confirm header="CONFIRMACIÓN" message="¿Está seguro de eliminar este registro?"/>
+                </p:menuitem>
+            </p:contextMenu>
+        </h:form>
+        
+        <p:dialog header="ACTUALIZAR DATOS" widgetVar="wdlgDatos" resizable="false" modal="true">
+            <h:form id="formDialog">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="NOMBRE" /> 
+                    <p:inputText value="#{personaC.per.nombre}" maxlength="8" ></p:inputText>
+                    <p:outputLabel value="APELLIDO" /> 
+                    <p:inputText value="#{personaC.per.apellido}" maxlength="8" ></p:inputText>
+                    <p:outputLabel value="CONTRASEÑA" /> 
+                    <p:inputText value="#{personaC.per.password}" maxlength="8" ></p:inputText>
+                    <p:outputLabel value="EMAIL" /> 
+                    <p:inputText value="#{personaC.per.email}" maxlength="8" ></p:inputText>
+                    <p:outputLabel value="DIRECCION" /> 
+                    <p:inputText value="#{personaC.per.direccion}" maxlength="8" ></p:inputText>
+                    <p:outputLabel value="DNI" /> 
+                    <p:inputText value="#{personaC.per.DNI}" maxlength="8" ><p:keyFilter regEx="/[0-9]/" /></p:inputText>
+                    <p:outputLabel value="CELULAR" /> 
+                    <p:inputText value="#{personaC.per.celular}" maxlength="8" ><p:keyFilter regEx="/[0-9]/" /></p:inputText>
+                    <p:outputLabel value="ESTADO"/>
+                    <p:selectOneRadio value="#{personaC.per.estado}">
+                        <f:selectItem itemLabel="ACTIVO" itemValue="I"/>
+                        <f:selectItem itemLabel="INACTIVO" itemValue="O"/>
+                    </p:selectOneRadio>
+                    <p:outputLabel value="ROL" /><p:selectOneRadio id="rol" value="#{personaC.per.ROL}" >
+                        <f:selectItem itemLabel="ADMINISTRADOR" itemValue="A"/>
+                        <f:selectItem itemLabel="APODERADO" itemValue="B"/>
+                        <f:selectItem itemLabel="ALUMNO" itemValue="C"/>
+                    </p:selectOneRadio>
+                    <p:commandButton value="MODIFICAR" actionListener="#{personaC.modificar()}" update=":formTblPersona:tblPersona" oncomplete="PF('wdlgDatos').hide()"/>
+                    <p:commandButton value="CANCELAR" oncomplete="PF('wdlgDatos').hide()"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+        <h:form>
+            <p:confirmDialog global="true">
+                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes"/>
+                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no"/>
+            </p:confirmDialog>
+        </h:form>
+    </h:body>
+</html>
+
+                            

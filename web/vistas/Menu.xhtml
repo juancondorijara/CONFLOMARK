@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+
+    <h:head>
+        <title>MENU</title>
+<!--        <f:event listener="#{clienteC.listar()}" type="preRenderView" />-->
+    </h:head>
+
+    <h:body>
+
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+
+        <!--        Formulario del Menú>-->
+        <h:form>
+            <p:sidebar widgetVar="sidebar1" baseZIndex="10000">
+                <center>
+                    <h1 style="font-weight:bold">MENÚ</h1>
+                </center>
+                <p:panelMenu style="width:300px">
+                    <p:submenu label="Cliente">
+                        <p:menuitem icon="pi pi-user" value="Registrar Cliente" outcome="/vistas/Cliente"/>                  
+                    </p:submenu>
+                    <p:submenu label="Producto">
+                        <p:menuitem icon="pi pi-briefcase" value="Registrar Producto" outcome="/vistas/Producto"/>
+                    </p:submenu>                               
+                </p:panelMenu>
+                <p:commandButton icon="pi pi-times" value="Cerrar" oncomplete="PF('sidebar1').hide()"/>
+            </p:sidebar>              
+            <p:commandButton icon="pi pi-arrow-right" oncomplete="PF('sidebar1').show()" />
+        </h:form>
+        <!--        Formulario del Menú>-->
+        
+<!--        <h:form>
+            <p:breadCrumb>
+                <p:menuitem icon="pi pi-home" value="Categories" url="http://localhost:8080/Conflomark/faces/vistas/Menu.xhtml" />
+                <p:menuitem value="Menú" url="http://localhost:8080/Conflomark/faces/vistas/Menu.xhtml" />
+                <p:menuitem value="Cliente" url="http://localhost:8080/Conflomark/faces/vistas/Cliente.xhtml" />
+                <p:menuitem value="Producto" url="http://localhost:8080/Conflomark/faces/vistas/Producto.xhtml" />
+            </p:breadCrumb>
+        </h:form>-->
+
+        <p:growl id="mensaje" showDetail="true" />
+        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+    </h:body>
+
+</html>
+
