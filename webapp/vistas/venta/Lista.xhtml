@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:head>
+        <title>Listado de Ventas</title>
+        <f:event listener="#{ventaC.listar()}" type="preRenderView" />
+    </h:head>
+
+    <h:body>
+
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+
+        <h:form>
+            <p:menubar>
+                <p:submenu label="Cliente" icon="pi pi-user">
+                    <p:menuitem value="Registro" icon="pi pi-save" url="http://localhost:8080/Conflomark_Maven/faces/vistas/cliente/Registro.xhtml" />
+                    <p:separator/>
+                    <p:menuitem value="Lista" icon="pi pi-list" url="http://localhost:8080/Conflomark_Maven/faces/vistas/cliente/Lista.xhtml" />
+                </p:submenu>
+                <p:submenu label="Producto" icon="pi pi-briefcase">
+                    <p:menuitem value="Registro" icon="pi pi-save" url="http://localhost:8080/Conflomark_Maven/faces/vistas/producto/Registro.xhtml" />
+                    <p:separator/>
+                    <p:menuitem value="Lista" icon="pi pi-list" url="http://localhost:8080/Conflomark_Maven/faces/vistas/producto/Lista.xhtml" />
+                </p:submenu>
+                <p:submenu label="Venta" icon="pi pi-money-bill">
+                    <p:menuitem value="Registro" icon="pi pi-save" url="http://localhost:8080/Conflomark_Maven/faces/vistas/venta/Registro.xhtml" />
+                    <p:separator/>
+                    <p:menuitem value="Lista" icon="pi pi-list" url="http://localhost:8080/Conflomark_Maven/faces/vistas/venta/Lista.xhtml" />
+                </p:submenu>
+                <p:submenu label="Venta Detalle" icon="pi pi-money-bill">
+                    <p:menuitem value="Registro" icon="pi pi-save" url="http://localhost:8080/Conflomark_Maven/faces/vistas/ventadetalle/Registro.xhtml" />
+                    <p:separator/>
+                    <p:menuitem value="Lista" icon="pi pi-list" url="http://localhost:8080/Conflomark_Maven/faces/vistas/ventadetalle/Lista.xhtml" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+
+        <p:growl id="mensaje" showDetail="true" />
+        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+        <!--  Listado de la venta -->
+        <h:form id="form2">
+            <center>
+                <p:panelGrid columns="2">
+                    <h:commandLink value="Descargar">
+                        <h:graphicImage url="/recursos/pdf.png" width="50px"/>
+                        <p:dataExporter type='pdf' target=":form2:tablaVen" fileName="Lista de Ventas"/>
+                    </h:commandLink>
+                    <h:commandLink value="Descargar">
+                        <h:graphicImage url="/recursos/xls.png" width="50px"/>
+                        <p:dataExporter type='xls' target=":form2:tablaVen" fileName="Lista de Ventas" />              
+                    </h:commandLink>
+                </p:panelGrid>
+            </center>
+            <center>
+                <p:dataTable id="tablaVen" var="tblven" value="#{ventaC.listadoVenta}" selection="#{ventaC.venta}"
+                             selectionMode="single" rowKey="#{tblven.codigo}" resizableColumns="true"
+                             paginator="true" rows="10" widgetVar="tblVenta"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                             rowsPerPageTemplate="5,10,{ShowAll|'All'}" style="width: 40%;">
+                    <f:facet name="header">
+                        <p:outputPanel>
+                            <h:outputText value="Buscar:"/>
+                            <h:inputText id="globalFilter" onkeyup="PF('tblVenta').filter()" style="width:200px"/>
+                        </p:outputPanel>
+                    </f:facet>
+                    <f:facet name= "header"> LISTADO DE VENTAS </f:facet>
+<!--                    <p:column style="width:30px" headerText="ID" sortBy="#{tblven.codigo}" filterBy="#{tblven.codigo}">
+                        <h:outputText value="#{tblven.codigo}" />
+                    </p:column>-->
+                    <p:column style="width:50px" headerText="Fecha" sortBy="#{tblven.fecha}" filterBy="#{tblven.fecha}">
+                        <h:outputText value="#{tblven.fecha}">
+                        <f:convertDateTime type="Date" pattern="dd-MM-yyyy"/>
+                    </h:outputText>
+                    </p:column>
+                    <p:column style="width:30px" headerText="Cliente" sortBy="#{tblven.cliente}" filterBy="#{tblven.cliente}">
+                        <h:outputText value="#{tblven.cliente}" />
+                    </p:column>
+                    <p:column style="width:30px" headerText="Empleado" sortBy="#{tblven.empleado}" filterBy="#{tblven.empleado}">
+                        <h:outputText value="#{tblven.empleado}" />
+                    </p:column>
+                    <p:column style="width:35px" headerText="Total" sortBy="#{tblven.total}" filterBy="#{tblven.total}">
+                        <h:outputText value="#{tblven.total}" />
+                    </p:column>
+                    <f:facet name="footer">
+                        EN TOTAL HAY #{fn:length(ventaC.listadoVenta)} REGISTROS
+                    </f:facet>
+                </p:dataTable>
+            </center>
+            <p:contextMenu for="tablaVen">
+                <p:menuitem value="Modificar" icon="pi pi-pencil" oncomplete="PF('wdlgDatos').show()" update=":form3">
+                </p:menuitem>
+                <p:menuitem value="Eliminar" icon="pi pi-trash" actionListener="#{ventaC.eliminarEstado()}" update=":form2:tablaVen mensaje">
+                    <p:confirm header="Confirmación" message="¿Deseas eliminar?"/>
+                </p:menuitem>
+            </p:contextMenu>
+            <!--      Listado de la venta -->
+        </h:form>
+
+
+        <p:dialog header="Datos de la Venta" widgetVar="wdlgDatos" resizable="false" modal="true">
+            <h:form id="form3">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Fecha"/>
+                    <p:calendar id="fecha" value="#{ventaC.venta.fecha}"
+                                showOn="button" pattern="dd-MM-yyyy" mask="true" navigator="true" mindate="@now"
+                                size="20" required="true" requiredMessage="Ingrese la fecha">
+                    </p:calendar>
+                    <p:outputLabel value="Cliente"/>
+                    <p:autoComplete value="#{ventaC.venta.cliente}" completeMethod="#{ventaC.completeTextCliente}"
+                                    inputStyle="width: 150%;" minQueryLength="2" required="true" requiredMessage="Ingrese el Cliente">
+                        <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                    </p:autoComplete>
+                    <p:outputLabel value="Empleado"/>
+                    <p:autoComplete value="#{ventaC.venta.empleado}" completeMethod="#{ventaC.completeTextEmpleado}"
+                                    inputStyle="width: 150%;" minQueryLength="2" required="true" requiredMessage="Ingrese el Empleado">
+                        <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                    </p:autoComplete>
+                    <p:outputLabel value="Total" /> 
+                    <p:inputText value="#{ventaC.venta.total}" maxlength="6" style="width: 330px;" required="true" requiredMessage="Ingrese el Total">
+                        <p:keyFilter regEx="/[0-9_.]/" />
+                    </p:inputText>
+                    <p:commandButton value="Modificar" icon="pi pi-pencil" actionListener="#{ventaC.modificar()}" 
+                                     update=":form2:tablaVen mensaje" oncomplete="PF('wdlgDatos').hide();" >
+                        <p:confirm header="Confirmación" message="¿Deseas Modificar?" icon="ui-icon-alert"/>
+                        <p:tooltip trackMouse="true"/>
+                    </p:commandButton>
+                    <p:commandButton value="Cancelar" icon="pi pi-times" immediate="true" oncomplete="PF('wdlgDatos').hide();" />
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                </p:panelGrid>
+
+            </h:form>
+        </p:dialog>
+    </h:body>
+
+</html>
+

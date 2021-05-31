@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:head>
+        <title>Registro de Venta Detalle</title>
+        <f:event listener="#{ventadetalleC.listar()}" type="preRenderView" />
+    </h:head>
+
+    <h:body>
+
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+        
+        <h:form>
+            <p:menubar>
+                <p:submenu label="Cliente" icon="pi pi-user">
+                    <p:menuitem value="Registro" icon="pi pi-save" url="http://localhost:8080/Conflomark_Maven/faces/vistas/cliente/Registro.xhtml" />
+                    <p:separator/>
+                    <p:menuitem value="Lista" icon="pi pi-list" url="http://localhost:8080/Conflomark_Maven/faces/vistas/cliente/Lista.xhtml" />
+                </p:submenu>
+                <p:submenu label="Producto" icon="pi pi-briefcase">
+                    <p:menuitem value="Registro" icon="pi pi-save" url="http://localhost:8080/Conflomark_Maven/faces/vistas/producto/Registro.xhtml" />
+                    <p:separator/>
+                    <p:menuitem value="Lista" icon="pi pi-list" url="http://localhost:8080/Conflomark_Maven/faces/vistas/producto/Lista.xhtml" />
+                </p:submenu>
+                <p:submenu label="Venta" icon="pi pi-money-bill">
+                    <p:menuitem value="Registro" icon="pi pi-save" url="http://localhost:8080/Conflomark_Maven/faces/vistas/venta/Registro.xhtml" />
+                    <p:separator/>
+                    <p:menuitem value="Lista" icon="pi pi-list" url="http://localhost:8080/Conflomark_Maven/faces/vistas/venta/Lista.xhtml" />
+                </p:submenu>
+                <p:submenu label="Venta Detalle" icon="pi pi-money-bill">
+                    <p:menuitem value="Registro" icon="pi pi-save" url="http://localhost:8080/Conflomark_Maven/faces/vistas/ventadetalle/Registro.xhtml" />
+                    <p:separator/>
+                    <p:menuitem value="Lista" icon="pi pi-list" url="http://localhost:8080/Conflomark_Maven/faces/vistas/ventadetalle/Lista.xhtml" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+
+        <p:growl id="mensaje" showDetail="true" />
+        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+
+        <h:form id="form">
+            <!--  Formulario de Venta detalle  -->
+            <center>
+                <h:messages showDetail="true"/>
+                <p:panelGrid columns="1" style="width: 25%;">
+                    <f:facet name= "header" > REGISTRO DE VENTA DETALLE </f:facet>
+                    <p:outputLabel value="Cantidad" /> 
+                    <p:inputText value="#{ventadetalleC.ventadetalle.cantidad}" maxlength="2" placeholder="0" style="width: 355px;" required="true" requiredMessage="Ingrese la Cantidad">
+                        <p:keyFilter regEx="/[0-9_.]/" />
+                    </p:inputText>
+                    <p:outputLabel value="Subtotal" /> 
+                    <p:inputText value="#{ventadetalleC.ventadetalle.subtotal}" maxlength="6" placeholder="0.0" style="width: 355px;" required="true" requiredMessage="Ingrese el subtotal">
+                        <p:keyFilter regEx="/[0-9_.]/" />
+                    </p:inputText>
+                    <p:outputLabel value="Venta"/>
+                    <p:autoComplete value="#{ventadetalleC.ventadetalle.venta}" completeMethod="#{ventadetalleC.completeTextVenta}"
+                                    inputStyle="width: 150%;" minQueryLength="2" required="true" requiredMessage="Ingrese la Venta">
+                        <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                    </p:autoComplete>
+                    <p:outputLabel value="Producto"/>
+                    <p:autoComplete value="#{ventadetalleC.ventadetalle.producto}" completeMethod="#{ventadetalleC.completeTextProducto}"
+                                    inputStyle="width: 150%;" minQueryLength="2" required="true" requiredMessage="Ingrese el Producto">
+                        <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                    </p:autoComplete>
+                </p:panelGrid>
+                <p:panelGrid columns="2" style="width: 10%;">
+                    <p:commandButton value="Registrar" actionListener="#{ventadetalleC.registrar()}" icon="pi pi-save" update="form mensaje" style="background:black"/>
+                    <p:linkButton value="Lista" outcome="Lista" icon="pi pi-list" style="background:black"/>
+                </p:panelGrid>
+            </center>
+        </h:form>
+        <!--  Formulario de Venta detalle -->
+
+    </h:body>
+
+</html>
+
