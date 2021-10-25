@@ -1,0 +1,76 @@
+--CLONAR LA RAMA Conflomark_ODAO
+git clone https://github.com/vallegrande/AS201S3_T04_Conflomark.git -b Conflomark_ODAO --single-branch
+git clone https://github.com/vallegrande/AS201S3_T04_Conflomark.git -b Conflomark_OJPA --single-branch
+
+--AS201S3_T04_Conflomark_ODAO | AS201S3_T04_Conflomark_OJPA
+--SUBIR A LA RAMA Conflomark_ODAO | Conflomark_OJPA
+git init
+git add .
+git commit -m "Conflomark con Oracle"
+git commit -m "Conflomark JPA Oracle"
+git push origin Conflomark_ODAO
+git push origin Conflomark_OJPA
+
+
+
+--CLONAR LA RAMA Conflomark_Landing_Page y COMMIT
+git clone https://github.com/juancondorijara/04_JuanCondori_Trabajo2.git -b main --single-branch
+git clone https://github.com/sergioflorestadeo/Conflomark_Landing_Page.git -b main --single-branch
+git init
+git add .
+git commit -m "Trabajo2 Omnifaces"
+git commit -m "Conflomark Landing Page"
+git push origin main
+
+
+
+--SOLUCION GLASSFISH COMO ADMIN CMD
+netstat -ano : find "8080"
+netstat -oan
+netstat -ano | find "8080"
+taskkill /f /pid 5236
+
+
+
+--SOLUCION GLASSFISH SERVER
+asadmin start-domain
+C:\Users\Juan Condori\AppData\Roaming\NetBeans\8.2\config\GF_4.1.1
+C:\Program Files\glassfish-4.1.1\glassfish
+
+
+
+--PAYARA SERVER 5.201
+C:\Users\Juan Condori\Payara Server 5.201
+C:\Users\Juan Condori\Payara Server 5.201\glassfish\bin  //POWERSHELL
+./asadmin start-domain
+./asadmin stop-domain
+
+C:\Users\Juan Condori\GlassFish_Server
+C:\Program Files\GlassFish_Server
+
+
+
+--CLONAR LA RAMA DB-QueryDB
+git clone https://github.com/vallegrande/AS201S3_T04_Conflomark.git -b DB-QueryDB --single-branch
+git init
+git add .
+git commit -m "Prueba"
+git push origin DB-QueryDB
+
+$ git clone https ://${TOKEN}:x-oauth-basic@github.com/MyUser/MyRepo.git   //PLANTILLA
+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  			           //MI TOKEN
+git clone https://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:x-oauth-basic@github.com/vallegrande/AS201S3_T04_Conflomark.git -b DB-QueryDB --single-branch   //CLONACION CON TOKEN
+git init
+git add .
+git commit -m "Prueba"
+git push origin DB-QueryDB
+
+
+
+
+
+
+
+
+
+
