@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="29px" height="32px" viewBox="0 0 29 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-poseidon</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#5CACF4" offset="0%"></stop>
+            <stop stop-color="#1B74C5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-/-Default-/-Purple" transform="translate(-1246.000000, -876.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="icon-poseidon" transform="translate(1246.000000, 876.000000)">
+                <polygon id="Path-2" points="14.713651 0.0833000057 18.3449012 2.80812019 16.6646211 5.04756034 15.93972 4.50430001 15.93672 17.5943 21.3445415 19.5644413 25.0455117 1.82098012 28.980282 5.73251039 28 8 26.7325818 7.44695051 23.4253616 23.3023016 15.93672 20.5753 15.9343811 31.0237823 13.4843809 31.0237823 13.48672 20.5633 5.96638041 23.3023016 2.66735018 7.44695051 1 8 0.419720029 5.73251039 4.3558903 1.81972012 8.04860055 19.5644413 13.48672 17.5823 13.48972 4.50030001 12.7613509 5.04756034 11.0810708 2.80812019"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

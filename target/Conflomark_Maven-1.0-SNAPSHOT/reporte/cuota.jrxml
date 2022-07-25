@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cuota" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="29670e8a-73f0-40d8-bf2b-7cea5f7e28ad">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select CANCUOT,MONCUOT,FECCUOT,CONCAT(NOMPER,' ',APEPER)AS NOMPER,NOMACT FROM CUOTA
+inner join PERSONA ON CUOTA.IDPER=PERSONA.IDPER
+inner join ACTIVIDAD ON CUOTA.IDACT=ACTIVIDAD.IDACT;]]>
+	</queryString>
+	<field name="CANCUOT" class="java.lang.Integer"/>
+	<field name="MONCUOT" class="java.lang.Integer"/>
+	<field name="FECCUOT" class="java.sql.Date"/>
+	<field name="NOMPER" class="java.lang.String"/>
+	<field name="NOMACT" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="230" y="27" width="134" height="34" uuid="5a1a18ad-5a93-4179-8fd4-6eec577563e2"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUOTAS]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="440" y="7" width="100" height="20" uuid="69207f5f-8fb4-4eb1-bee0-152d3f7b3cf3"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="11" width="100" height="20" uuid="1d054391-756a-48e1-b5a5-5fe814e606a1"/>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="127" y="11" width="100" height="20" uuid="cfbc3bbd-ac00-4cf2-a368-062f27e75c7d"/>
+				<text><![CDATA[APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="11" width="63" height="20" uuid="c7656abb-0a87-404a-a19f-8f4433ee9643"/>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="11" width="81" height="20" uuid="7ba1c105-834d-452c-b115-2eb3b502efbb"/>
+				<text><![CDATA[CANTIDAD PAGADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="11" width="100" height="20" uuid="96e8e3c5-7301-415c-894c-0cebdd980fb8"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="15" y="0" width="100" height="20" uuid="c9006bf3-f559-4215-bf91-9b2495a25739"/>
+				<textFieldExpression><![CDATA[$F{NOMPER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="0" width="100" height="20" uuid="540dada0-a861-46d9-8b20-b9efe40b1931"/>
+				<textFieldExpression><![CDATA[$F{NOMACT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="81" height="20" uuid="87b73132-e211-4cd6-ac44-35001f9f0339"/>
+				<textFieldExpression><![CDATA[$F{CANCUOT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="0" width="100" height="20" uuid="0ef718b0-2709-4e92-9b47-ebc08b871307"/>
+				<textFieldExpression><![CDATA[$F{FECCUOT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="82" height="20" uuid="d22814da-bf79-4861-839f-70d1f30a022b"/>
+				<textFieldExpression><![CDATA[$F{MONCUOT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="227" y="0" width="100" height="20" uuid="e9127835-de5e-4b84-83f5-0b3f9b33a457"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

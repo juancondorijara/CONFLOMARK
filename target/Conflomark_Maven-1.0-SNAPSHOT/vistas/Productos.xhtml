@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./Plantilla.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="content">
+        <h:head>
+            <title>Listado de Productos</title>
+            <f:event listener="#{productoC.listar()}" type="preRenderView" />
+        </h:head>
+
+        <h:body>
+
+            <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+
+            <p:growl id="mensaje" showDetail="true" />
+            <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+            <div>
+                <center>
+                    <h:form id="opciones">
+                        <h1 style="color: black">Registro de Productos</h1>
+                        <hr></hr>
+                        <p:panelGrid columns="1" style="align-content: center">
+                            <p:commandButton value="Registrar" icon="pi pi-plus" oncomplete="PF('wdlgRegistrar').show();"/>
+                        </p:panelGrid>
+                        <hr></hr>
+                    </h:form>
+                </center>
+            </div>
+
+            <h:form id="form">
+                <center>
+                    <p:dialog header="REGISTRO DE PRODUCTO" id="dlgDatos" widgetVar="wdlgRegistrar" modal="true"
+                              showEffect="clip" resizable="true" minimizable="false" maximizable="false">
+                        <p:ajax event="close" update="form"/>
+                        <p:panelGrid columns="3" style="margin: 0 auto;" styleClass="ui-noborder">
+                            <p:outputLabel value="Nombre" for="nombre"/>
+                            <p:inputText id="nombre" value="#{productoC.producto.NOMPRO}" maxlength="50" style="width: 330px;" 
+                                         required="true" requiredMessage="Ingrese el Nombre">
+                                <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                                <!--<p:ajax update="msgNombre"/>-->
+                                <p:tooltip for="nombre" value="Ingrese el Nombre" trackMouse="focus"/>
+                            </p:inputText>
+                            <p:message id="msgNombre" for="nombre"/>
+                            <p:outputLabel value="Marca" for="marca"/>
+                            <p:inputText id="marca" value="#{productoC.producto.MARPRO}" maxlength="50" style="width: 330px;" 
+                                         required="true" requiredMessage="Ingrese la Marca">
+                                <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                                <p:tooltip for="marca" value="Ingrese la Marca" trackMouse="focus"/>
+                            </p:inputText>
+                            <p:message for="marca"/>
+                            <p:outputLabel value="SubFamilia" for="subfamilia"/>
+                            <p:selectOneMenu id="subfamilia" value="#{productoC.producto.CODFAM}" style="width:330px"
+                                             filter="true" filterMatchMode="contains" required="true" requiredMessage="Seleccione la SubFamilia" >
+                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                <f:selectItems value="#{familiaC.listadoFamilia}" var="familia"
+                                               itemValue="#{familia.CODFAM}"
+                                               itemLabel="#{familia.SUBFAM}
+                                               #{familia.NOMFAM}"/>
+                            </p:selectOneMenu>
+                            <p:message for="subfamilia"/>
+                            <p:outputLabel value="Descripción" for="descripción"/>
+                            <p:inputText id="descripción" value="#{productoC.producto.DESPRO}" maxlength="80" style="width: 330px;"
+                                         required="true" requiredMessage="Ingrese la Descripción">
+                                <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                                <p:tooltip for="descripción" value="Ingrese la Descripción" trackMouse="focus"/>
+                            </p:inputText>
+                            <p:message for="descripción"/>
+                            <p:outputLabel value="Precio" for="precio"/> 
+                            <p:inputText id="precio" value="#{productoC.producto.PREPRO}" maxlength="8" style="width: 170px;"
+                                         required="true" requiredMessage="Ingrese el Precio">
+                                <p:keyFilter regEx="/[0-9_.]/" />
+                                <p:tooltip for="precio" value="Ingrese el Precio" trackMouse="focus"/>
+                            </p:inputText>
+                            <p:message for="precio"/>
+                            <p:outputLabel value="Stock" for="stock"/> 
+                            <p:inputText id="stock" value="#{productoC.producto.STOPRO}" maxlength="2" style="width: 170px;" 
+                                         required="true" requiredMessage="Ingrese el Stock">
+                                <p:keyFilter regEx="/[0-9]/" />
+                                <p:tooltip for="stock" value="Ingrese el Stock" trackMouse="focus"/>
+                            </p:inputText>
+                            <p:message for="stock"/>
+                            <p:outputLabel value="Vencimiento" for="vencimiento"/>
+                            <p:calendar id="vencimiento" value="#{productoC.producto.VENPRO}"
+                                        showOn="button" pattern="dd-MM-yyyy" navigator="true" locale="de" mindate="@now"
+                                        required="true" requiredMessage="Ingrese el Vencimiento" size="15">
+                            </p:calendar>
+                            <p:message for="vencimiento"/>
+                            <p:outputLabel value="Proveedor" for="proveedor"/>
+                            <p:selectOneMenu id="proveedor" value="#{productoC.producto.CODPROV}" style="width:330px"
+                                             filter="true" filterMatchMode="contains" required="true" requiredMessage="Seleccione el Proveedor" >
+                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                <f:selectItems value="#{proveedorC.listadoProveedor}" var="proveedor"
+                                               itemValue="#{proveedor.CODPROV}"
+                                               itemLabel="#{proveedor.NOMPROV}
+                                               #{proveedor.COMPROV}"/>
+                            </p:selectOneMenu>
+                            <p:message for="proveedor"/>
+                            <p:commandButton id="registrar" value="Registrar" action="#{productoC.registrar()}" disabled="false" icon="pi pi-save" 
+                                             update=":form2:tablaPro form" oncomplete="PF('wdlgRegistrar').hide();">
+                                <!--<f:actionListener binding="#{productoC.registrar()}"/>-->
+                                <p:confirm type="popup" header="Confirmación" message="¿Desea Registrar?" icon="pi pi-exclamation-triangle"/>
+                            </p:commandButton>
+                            <p:commandButton value="Cancelar" icon="pi pi-times" immediate="true" oncomplete="PF('wdlgRegistrar').hide();"/>
+                            <p:confirmPopup style="margin: initial" global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirm-popup-yes" icon="ui-icon-check" async="true"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-confirm-popup-no" icon="ui-icon-close"/>
+                            </p:confirmPopup>
+                        </p:panelGrid>
+                    </p:dialog>
+                </center>
+            </h:form>
+
+            <h:form id="form2">
+                <center>
+                    <p:dataTable id="tablaPro" var="tblpro" value="#{productoC.listadoProducto}" selection="#{productoC.producto}"
+                                 selectionMode="single" rowKey="#{tblpro.IDPRO}" resizableColumns="true"
+                                 paginator="true" rows="5" widgetVar="tblProducto"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                 rowsPerPageTemplate="5,10,15,{ShowAll|'All'}" style="width: 85%;">
+                        <f:facet name="header">
+                            <center>
+                                <p:outputPanel>
+                                    <h:outputText value="BUSCAR: "/>
+                                    <h:inputText id="globalFilter" onkeyup="PF('tblProducto').filter()" style="width:200px; height: 30px;"/>
+                                </p:outputPanel>
+                            </center>
+                        </f:facet>
+                        <center>
+                            <f:facet name= "header"> LISTADO DE PRODUCTOS </f:facet>
+                        </center>
+<!--                        <p:column style="width:50px" headerText="ID" sortBy="#{tblpro.IDPRO}" filterBy="#{tblpro.IDPRO}">
+                            <h:outputText value="#{tblpro.IDPRO}"/>
+                        </p:column>-->
+                        <p:column style="width:100px" headerText="NOMBRE" sortBy="#{tblpro.NOMPRO}" filterBy="#{tblpro.NOMPRO}">
+                            <h:outputText value="#{tblpro.NOMPRO}" />
+                        </p:column>
+                        <p:column style="width:100px" headerText="MARCA" sortBy="#{tblpro.MARPRO}" filterBy="#{tblpro.MARPRO}">
+                            <h:outputText value="#{tblpro.MARPRO}"/>
+                        </p:column>
+                        <p:column style="width:140px" headerText="SUBFAMILIA" sortBy="#{tblpro.CODFAM}" filterBy="#{tblpro.CODFAM}">
+                            <h:outputText value="#{tblpro.CODFAM}"/>
+                        </p:column>
+                        <p:column style="width:200px" headerText="DESCRIPCIÓN" sortBy="#{tblpro.DESPRO}" filterBy="#{tblpro.DESPRO}">
+                            <h:outputText value="#{tblpro.DESPRO}"/>
+                        </p:column>
+                        <p:column style="width:80px" headerText="PRECIO" sortBy="#{tblpro.PREPRO}" filterBy="#{tblpro.PREPRO}">
+                            <h:outputText value="#{tblpro.PREPRO}">
+                                <f:convertNumber type="currency" currencySymbol="S/ " minFractionDigits="2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="width:80px" headerText="STOCK" sortBy="#{tblpro.STOPRO}" filterBy="#{tblpro.STOPRO}">
+                            <h:outputText value="#{tblpro.STOPRO}">
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="width:100px" headerText="VENCIMIENTO">
+                            <h:outputText value="#{tblpro.VENPRO}">
+                                <f:convertDateTime type="Date" pattern="dd-MMM-yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="width:180px" headerText="PROVEEDOR" sortBy="#{tblpro.CODPROV}" filterBy="#{tblpro.CODPROV}">
+                            <h:outputText value="#{tblpro.CODPROV}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            EN TOTAL HAY #{fn:length(productoC.listadoProducto)} REGISTROS
+                        </f:facet>
+                    </p:dataTable>
+                    <hr></hr>
+                    <h:form id="formReporteProducto">
+                        <p:commandButton value="Reporte de Productos" actionListener="#{productoC.reporteProducto()}"
+                                         ajax="false" update="mensaje" icon="pi pi-download"/>
+                    </h:form>
+                    <hr></hr>
+                    <p:panelGrid columns="2">
+                        <h:commandLink value="Descargar">
+                            <h:graphicImage url="/recursos/xls.png" width="50px"/>
+                            <p:dataExporter type='xls' target="tablaPro" fileName="Lista de Productos (15-07-2021)"/>             
+                        </h:commandLink>
+                    </p:panelGrid>
+                </center>
+                <p:contextMenu for="tablaPro">
+                    <p:menuitem value="Modificar" icon="pi pi-pencil" oncomplete="PF('wdlgModificar').show()" update=":form3">
+                    </p:menuitem>
+                    <p:menuitem value="Eliminar" icon="pi pi-trash" actionListener="#{productoC.eliminarEstado()}" update=":form2:tablaPro mensaje">
+                        <p:confirm type="popup" header="Confirmación" message="¿Deseas eliminar?" icon="pi pi-exclamation-triangle"/>
+                    </p:menuitem>
+                    <p:menuitem icon="pi pi-user-plus" value="Registrar Cliente" outcome="/vistas/Clientes"/>
+                    <p:menuitem icon="pi pi-shopping-cart" value="Registrar Venta" outcome="/vistas/Ventas"/>
+                </p:contextMenu>
+            </h:form>
+
+            <h:form id="form3">
+                <p:dialog header="Datos del Producto" widgetVar="wdlgModificar" resizable="false" modal="true">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Nombre" />
+                        <p:inputText value="#{productoC.producto.NOMPRO}" maxlength="50" style="width:330px">
+                            <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                        </p:inputText>
+                        <p:outputLabel value="Marca" />
+                        <p:inputText value="#{productoC.producto.MARPRO}" maxlength="50" style="width:330px">
+                            <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                        </p:inputText>
+                        <p:outputLabel value="SubFamilia" for="subfamilia"/>
+                        <p:selectOneMenu id="subfamilia" value="#{productoC.producto.CODFAM}" style="width:330px"
+                                         filter="true" filterMatchMode="contains" required="true" requiredMessage="Seleccione la SubFamilia">
+                            <f:selectItem noSelectionOption="true" itemLabel="#{productoC.producto.CODFAM}" itemValue="#{null}"/>
+                            <f:selectItems value="#{familiaC.listadoFamilia}" var="familia"
+                                           itemValue="#{familia.CODFAM}"
+                                           itemLabel="#{familia.SUBFAM}
+                                           #{familia.NOMFAM}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Descripción" />
+                        <p:inputText value="#{productoC.producto.DESPRO}" maxlength="80" style="width:330px">
+                            <p:keyFilter regEx="/[A-Z_a-z_ñ_á_é_í_ó_ú_ ]/"/>
+                        </p:inputText>
+                        <p:outputLabel value="Precio" /> 
+                        <p:inputText value="#{productoC.producto.PREPRO}" maxlength="6" style="width:200px">
+                            <p:keyFilter regEx="/[0-9_.]/" />
+                        </p:inputText>
+                        <p:outputLabel value="Stock"/> 
+                        <p:inputText value="#{productoC.producto.STOPRO}" maxlength="2" style="width:200px">
+                            <p:keyFilter regEx="/[0-9]/" />
+                        </p:inputText>
+                        <p:outputLabel value="Vencimiento"/>
+                        <p:calendar id="vencimiento" value="#{productoC.producto.VENPRO}"
+                                    showOn="button" pattern="dd-MM-yyyy" navigator="true" locale="de" mindate="@now"
+                                    size="20">
+                        </p:calendar>
+                        <p:outputLabel value="Proveedor" for="proveedor"/>
+                        <p:selectOneMenu id="proveedor" value="#{productoC.producto.CODPROV}" style="width:330px"
+                                         filter="true" filterMatchMode="contains" required="true" requiredMessage="Seleccione el Proveedor" >
+                            <f:selectItem noSelectionOption="true" itemLabel="#{productoC.producto.CODPROV}" itemValue="#{null}"/>
+                            <f:selectItems value="#{proveedorC.listadoProveedor}" var="proveedor"
+                                           itemValue="#{proveedor.CODPROV}"
+                                           itemLabel="#{proveedor.NOMPROV}
+                                           #{proveedor.COMPROV}"/>
+                        </p:selectOneMenu>
+                        <p:commandButton value="Modificar" icon="pi pi-refresh" actionListener="#{productoC.modificar()}" 
+                                         update=":form2:tablaPro mensaje" oncomplete="PF('wdlgModificar').hide();" >
+                            <p:confirm type="popup" header="Confirmación" message="¿Deseas Modificar?" icon="pi pi-exclamation-triangle"/>
+                            <p:confirmPopup style="margin: initial" global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirm-popup-yes" icon="ui-icon-check" async="true"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-confirm-popup-no" icon="ui-icon-close"/>
+                            </p:confirmPopup>
+                        </p:commandButton>
+                        <p:commandButton value="Cancelar" icon="pi pi-times" immediate="true" oncomplete="PF('wdlgModificar').hide();" />
+                    </p:panelGrid>
+                </p:dialog>
+            </h:form>
+        </h:body>
+    </ui:define>
+
+</ui:composition>
