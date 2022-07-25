@@ -21,4 +21,3 @@ Administrar y controlar el registro de clientes, productos y ventas de un modelo
 * Acceso mediante el loguin.
 * Navegación fácil y entendible del sistema para el usuario.
 * Idioma y colores de las interfaces del sistema.
-
