@@ -8,7 +8,7 @@ sonarqube-check:
     paths:
       - .sonar/cache
   script: 
-    - mvn verify sonar:sonar -Dsonar.projectKey=Conflomark_Maven
+    - mvn verify sonar:sonar -Dsonar.projectKey=Conflomark_Ma
   allow_failure: true
   only:
     - sonarqube
