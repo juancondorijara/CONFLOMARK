@@ -15,9 +15,6 @@ jobs:
       - name: Extraer Datos de Confirmación de Git
         uses: rlespinasse/git-commit-data-action@v1.x
 
-      - name: Actualizar Información del Autor
-        run: echo "${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}>" > AUTHOR
-
       - name: Subir Pull Requests
         uses: peter-evans/create-pull-request@v3
         with:
