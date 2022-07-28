@@ -24,6 +24,6 @@ jobs:
           committer: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
           author: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
           body:
-            Demo creación automática de Pull Requests
+            Creación Automática de Pull Requests
           token: ${{ secrets.TOKEN_GITHUB }}
           delete-branch: false
