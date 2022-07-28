@@ -21,7 +21,7 @@ jobs:
       - name: Subir Pull Requests
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: "sonarqube"
+          branch: sonarqube
           base: Conflomark_Maven
           title: "Prueba Auto Pull Requests"
           committer: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
