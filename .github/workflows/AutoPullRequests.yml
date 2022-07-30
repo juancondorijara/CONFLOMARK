@@ -12,8 +12,13 @@ jobs:
     steps:
       - name: Auto Pull Requests
         uses: rlespinasse/git-commit-data-action@v1.x
-        env:
+        with:
+          branch: "sonarqube"
+          base: "Conflomark_Maven"
+          title: "Auto Pull Requests"
+          committer: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
+          author: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
+          body:
+            Creación Automática de Pull Requests
           token: ${{ secrets.TOKEN_GITHUB }}
-          BRANCH_PREFIX: "Conflomark_Maven"
-          PULL_REQUEST_BRANCH: "sonarqube"
           delete-branch: false
