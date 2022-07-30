@@ -6,7 +6,7 @@ on:
       - Conflomark_Maven
 
 jobs:
-  createPullRequest:
+  updateAuthor:
     runs-on: ubuntu-latest
     steps:
       - name: Revisando Código
