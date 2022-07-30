@@ -32,7 +32,6 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>9.2.1.jre8</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -135,11 +134,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2</version>
-            </plugin>-->
         </plugins>
     </build>
     <repositories>
