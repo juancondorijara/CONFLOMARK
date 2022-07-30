@@ -9,13 +9,13 @@ jobs:
   updateAuthor:
     runs-on: ubuntu-latest
     steps:
-      - name: Revisando Codigo
+      - name: Revisando Código
         uses: actions/checkout@v2
 
-      - name: Extraer Datos de Confirmacion de Git
+      - name: Extraer Datos de Confirmación de Git
         uses: rlespinasse/git-commit-data-action@v1.x
         
-      - name: Actualizar Informacion del Autor
+      - name: Actualizar Información del Autor
         run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR
 
       - name: Create Pull Requests
