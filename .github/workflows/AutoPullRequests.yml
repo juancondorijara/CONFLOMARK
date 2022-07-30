@@ -6,15 +6,20 @@ on:
       - Conflomark_Maven
 
 jobs:
-  auto-pull-request:
-    name: Auto Pull Requests
+  createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - name: Auto Pull Requests
+      - name: Revisando Código
+        uses: actions/checkout@v2
+
+      - name: Extraer Datos de Confirmación de Git
         uses: rlespinasse/git-commit-data-action@v1.x
+
+      - name: Subir Pull Requests
+        uses: peter-evans/create-pull-request@v3
         with:
-          branch: "sonarqube"
-          base: "Conflomark_Maven"
+          branch: sonarqube
+          base: Conflomark_Maven
           title: "Auto Pull Requests"
           committer: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
           author: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
