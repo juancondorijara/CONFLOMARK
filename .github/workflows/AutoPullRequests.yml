@@ -1,4 +1,4 @@
-name: Auto Pull Requests
+name: Auto Pull Requests test
 
 on:
   push:
@@ -18,12 +18,12 @@ jobs:
       - name: Subir Pull Requests
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: sonarqube
+          branch: "sonarqube"
           base: Conflomark_Maven
-          title: "Auto Pull Requests"
+          title: "Auto Pull Requests test"
           committer: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
           author: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
           body:
-            Creación Automática de Pull Requests
+            Creación Automática de Pull Requests test
           token: ${{ secrets.TOKEN_GITHUB }}
           delete-branch: false
