@@ -1,4 +1,4 @@
-name: Auto Pull Requests test
+name: Auto Pull Requests
 
 on:
   push:
@@ -15,15 +15,15 @@ jobs:
       - name: Extraer Datos de Confirmación de Git
         uses: rlespinasse/git-commit-data-action@v1.x
 
-      - name: Subir Pull Requests
+      - name: Create Pull Requests
         uses: peter-evans/create-pull-request@v3
         with:
           branch: "sonarqube"
           base: Conflomark_Maven
-          title: "Auto Pull Requests test"
-          committer: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
-          author: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
+          title: "Auto Pull Requests"
+          committer: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
+          author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
           body:
-            Creación Automática de Pull Requests test
-          token: ${{ secrets.TOKEN_GITHUB }}
+            Creación Automática de Pull Requests
+          #token: ${{ secrets.TOKEN_GITHUB }}
           delete-branch: false
