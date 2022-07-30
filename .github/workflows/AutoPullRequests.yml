@@ -6,14 +6,17 @@ on:
       - Conflomark_Maven
 
 jobs:
-  createPullRequest:
+  updateAuthor:
     runs-on: ubuntu-latest
     steps:
-      - name: Revisando Código
+      - name: Revisando Codigo
         uses: actions/checkout@v2
 
-      - name: Extraer Datos de Confirmación de Git
+      - name: Extraer Datos de Confirmacion de Git
         uses: rlespinasse/git-commit-data-action@v1.x
+        
+      - name: Actualizar Informacion del Autor
+        run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR
 
       - name: Create Pull Requests
         uses: peter-evans/create-pull-request@v3
@@ -25,5 +28,5 @@ jobs:
           author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
           body:
             Creación Automática de Pull Requests
-          #token: ${{ secrets.TOKEN_GITHUB }}
+          token: ${{ secrets.TOKEN_GITHUB }}
           delete-branch: false
