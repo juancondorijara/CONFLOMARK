@@ -19,6 +19,7 @@ jobs:
         run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR
 
       - name: Create Pull Requests
+        id: my-pull-request
         uses: peter-evans/create-pull-request@v3
         with:
           branch: "Conflomark_Maven"
@@ -30,4 +31,16 @@ jobs:
             Creación Automática de Pull Requests
           #token: ${{ secrets.TOKEN_GITHUB }}
           delete-branch: false
-          closed: true
+
+      - name: Approve Pull Request
+        uses: juliangruber/approve-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.TOKEN_GITHUB }}
+          number: ${{ steps.my-pull-request.outputs.pull-request-number }}
+
+      - name: Merge Pull request
+        uses: juliangruber/merge-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.TOKEN_GITHUB }}
+          number: ${{ steps.my-pull-request.outputs.pull-request-number }}
+          method: squash
