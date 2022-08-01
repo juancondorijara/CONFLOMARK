@@ -30,3 +30,4 @@ jobs:
             Creación Automática de Pull Requests
           #token: ${{ secrets.TOKEN_GITHUB }}
           delete-branch: false
+          to-closed: true
