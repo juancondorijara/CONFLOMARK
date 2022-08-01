@@ -15,10 +15,14 @@ jobs:
       - name: Extraer Datos de Confirmación de Git
         uses: rlespinasse/git-commit-data-action@v1.x
 
+      - name: Actualizar la información del autor
+        run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR
+
       - name: Create Pull Requests
+        id: my-auto-pull
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: sonarqube
+          branch: "sonarqube"
           base: Conflomark_Maven
           title: "Auto Pull Requests"
           committer: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
@@ -27,3 +31,16 @@ jobs:
             Creación Automática de Pull Requests
           #token: ${{ secrets.TOKEN_GITHUB }}
           delete-branch: false
+
+      - name: Approve Pull Request
+        uses: juliangruber/approve-pull-request-action@v1
+        with:
+          #github-token: ${{ secrets.APPROVER_DEMO }}
+          number: ${{ steps.my-auto-pull.outputs.pull-request-number }}
+
+      - name: Merge Pull Request
+        uses: juliangruber/merge-pull-request-action@v1
+        with:
+          #github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ steps.my-auto-pull.outputs.pull-request-number }}
+          method: squash
