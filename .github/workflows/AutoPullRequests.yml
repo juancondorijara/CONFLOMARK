@@ -19,7 +19,7 @@ jobs:
         run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR
 
       - name: Create Pull Requests
-        id: autopullmerge
+        id: autopullmerge-1
         uses: peter-evans/create-pull-request@v3
         with:
           branch: "Conflomark_Maven"
@@ -35,12 +35,12 @@ jobs:
       - name: Approve Pull Request
         uses: juliangruber/approve-pull-request-action@v1
         with:
-          #github-token: ${{ secrets.TOKEN_GITHUB }}
-          number: ${{ steps.autopullmerge.outputs.pull_number  }}
+          github-token: ${{ secrets.TOKEN_GITHUB }}
+          number: ${{ steps.autopullmerge-1.outputs.pull-request-number }}
 
       - name: Merge Pull Request
         uses: juliangruber/merge-pull-request-action@v1
         with:
-          #github-token: ${{ secrets.TOKEN_GITHUB }}
-          number: ${{ steps.autopullmerge.outputs.pull_number  }}
+          github-token: ${{ secrets.TOKEN_GITHUB }}
+          number: ${{ steps.autopullmerge-1.outputs.pull-request-number }}
           method: commit
