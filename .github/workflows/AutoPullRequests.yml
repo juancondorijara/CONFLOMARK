@@ -18,9 +18,9 @@ jobs:
       - name: Actualizar la Información del Autor
         run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR_RUN
 
-      - name: Create Pull Requests
-        id: mydemooo
-        uses: peter-evans/create-pull-request@v3
+      - name: Merge Pull Request
+        id: mydemo
+        uses: juliangruber/merge-pull-request-action@v1
         with:
           branch: "Conflomark_Maven"
           base: sonarqube
@@ -29,12 +29,7 @@ jobs:
           author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
           body:
             Creación Automática de Pull Requests
-          token: ${{ secrets.TOKEN_GITHUB }}
-          delete-branch: false
-
-      - name: Merge Pull Request
-        uses: juliangruber/merge-pull-request-action@v1
-        with:
           github-token: ${{ secrets.TOKEN_GITHUB }}
-          number: ${{ steps.mydemooo.outputs.pull-request-number }}
+          number: ${{ steps.mydemo.outputs.pull-request-number }}
           method: merge
+          delete-branch: false
