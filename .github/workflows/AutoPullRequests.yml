@@ -3,7 +3,7 @@ name: Auto Pull Requests
 on:
   push:
     branches:
-      - Conflomark_Maven
+      - sonarqube
 
 jobs:
   updateAuthor:
