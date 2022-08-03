@@ -16,7 +16,7 @@ jobs:
         uses: rlespinasse/git-commit-data-action@v1.x
 
       - name: Actualizar la Información del Autor
-        run: echo "Juan Gabriel Condori Jara <juan.condori.jara@vallegrande.edu.pe>" > AUTHOR
+        run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}"> > AUTHOR
 
       - name: Create Pull Requests
         id: mydemo-1
