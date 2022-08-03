@@ -19,7 +19,7 @@ jobs:
         run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR_RUN
 
       - name: Create Pull Requests
-        id: mydemo
+        id: mydemooo
         uses: peter-evans/create-pull-request@v3
         with:
           branch: "Conflomark_Maven"
@@ -36,5 +36,5 @@ jobs:
         uses: juliangruber/merge-pull-request-action@v1
         with:
           github-token: ${{ secrets.TOKEN_GITHUB }}
-          number: ${{ steps.mydemo.outputs.pull-request-number }}
+          number: ${{ steps.mydemooo.outputs.pull-request-number }}
           method: merge
