@@ -35,6 +35,8 @@ jobs:
       - name: Approve Pull Request
         uses: juliangruber/approve-pull-request-action@v1
         with:
+          committer: ${{ env.GIT_COMMIT_COMMITTER_NAME }} <${{ env.GIT_COMMIT_COMMITTER_NAME }}">
+          author: ${{ env.GIT_COMMIT_COMMITTER_EMAIL }} <${{ env.GIT_COMMIT_COMMITTER_EMAIL }}">
           github-token: ${{ secrets.TOKEN_GITHUB }}
           number: ${{ steps.mydemo-1.outputs.pull-request-number }}
 
@@ -44,4 +46,3 @@ jobs:
           github-token: ${{ secrets.TOKEN_GITHUB }}
           number: ${{ steps.mydemo-1.outputs.pull-request-number }}
           method: merge
-          repo: juancondorijara/CONFLOMARK
