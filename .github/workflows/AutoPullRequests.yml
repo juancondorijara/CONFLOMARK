@@ -3,7 +3,7 @@ name: Auto Pull Requests
 on:
   push:
     branches:
-      - sonarqube
+      - Conflomark_Maven
 
 jobs:
   updateAuthor:
@@ -22,8 +22,8 @@ jobs:
         id: mydemo
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: "Conflomark_Maven"
-          base: sonarqube
+          branch: "sonarqube"
+          base: Conflomark_Maven
           title: "Auto Pull Requests"
           committer: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
           author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
