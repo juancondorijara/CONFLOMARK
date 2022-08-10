@@ -6,7 +6,7 @@ on:
       - Conflomark_Maven
 
 jobs:
-  updateAuthor:
+  build:
     runs-on: ubuntu-latest
     steps:
 
@@ -14,7 +14,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create Pull Request
-      - run: |
+        run: |
+          git config --global user.name "juancondorijara"
+          git config --global user.email "juan.condori.jara@vallegrande.edu.pe"
           git checkout sonarqube
           git merge Conflomark_Maven
           git push origin sonarqube
