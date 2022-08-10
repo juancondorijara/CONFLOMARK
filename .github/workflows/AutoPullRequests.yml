@@ -10,17 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Revisando Código
+        uses: actions/checkout@v3
+
       - name: Create Pull Request
         id: mydemo
-      - run: git checkout sonarqube
-      - run: git merge Conflomark_Maven
-        with:
-          branch: "Conflomark_Maven"
-          base: sonarqube
-          title: "Auto Pull Requests"
-          committer: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
-          author: ${{ secrets.GIT_COMMIT_AUTHOR_NAME }} <${{ secrets.GIT_COMMIT_AUTHOR_EMAIL }}">
-          body:
-            Creación Automática de Pull Requests
-          token: ${{ secrets.TOKEN_GITHUB }}
-          delete-branch: false
+      - run: |
+          git checkout sonarqube
+          git merge Conflomark_Maven
+          git push origin sonarqube
