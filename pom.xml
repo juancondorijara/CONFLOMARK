@@ -12,7 +12,6 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
         <sonar.organization>juancondorijara</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
