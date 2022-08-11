@@ -3,7 +3,9 @@ name: GithubActions Y SonarCloud
 on:
   push:
     branches:
-      - GithubActions_SonarCloud
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
       
 jobs:
   build:
