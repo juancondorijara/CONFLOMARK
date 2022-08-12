@@ -1,4 +1,4 @@
-# Conflomark
+# Conflomark V1
 Sistema de ventas para Supermercados (Juan Condori | Sergio Flores)
 
 ### Objetivos Generales
